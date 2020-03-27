@@ -10,4 +10,7 @@ npm install
 npm start
 ```
 
-this
+A browser at window will popup at `http://localhost:3000`
+
+
+

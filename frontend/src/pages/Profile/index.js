@@ -34,7 +34,7 @@ export default function Profile() {
 
       setIncidents(incidents.filter(incident => incident.id !== id));
     } catch (error) {
-      alert('Erro ao excluir o caso, tente novamente.');
+      alert('The was an error trying to delete the incident');
     }
   }
 
@@ -50,25 +50,25 @@ export default function Profile() {
         <img src={logoImg} alt="Be The Hero" />
         <span>Bem vindo(a), {ongName}</span>
         <Link className="button" to="/incidents/new">
-          Cadastrar novo caso
+          Create new Incident
         </Link>
         <button type="button" onClick={handleLogout}>
           <FiPower size={16} color="#E02041" />
         </button>
       </header>
-      <h1>Casos cadastrados</h1>
+      <h1>Existing Incidents</h1>
       <ul>
         {incidents.map(incident => (
           <li key={incident.id}>
-            <strong>CASO:</strong>
+            <strong>INCIDENT:</strong>
             <p>{incident.title}</p>
-            <strong>DESCRIÇÃO:</strong>
+            <strong>DESCRIPTION:</strong>
             <p>{incident.description}</p>
-            <strong>VALOR:</strong>
+            <strong>AMOUNT:</strong>
             <p>
-              {Intl.NumberFormat('pt-BR', {
+              {Intl.NumberFormat('en-US', {
                 style: 'currency',
-                currency: 'BRL'
+                currency: 'USD'
               }).format(incident.value)}
             </p>
             <button

@@ -31,7 +31,7 @@ export default function NewIncident() {
 
       history.push('/profile')
     } catch (error) {
-      alert('Erro ao inserir novo caso, tente novamente');
+      alert('There was an error creating a new incident');
     }
   }
   return (
@@ -39,32 +39,31 @@ export default function NewIncident() {
       <div className="content">
         <section>
           <img src={logoImg} alt="Be The Hero" />
-          <h1>Cadastrar novo caso</h1>
+          <h1>Create a new incident</h1>
           <p>
-            Descreva o caso detalhadamente para encontrar um herói para resolver
-            isso.
+            Describe the incident with details to help you find a hero.
           </p>
           <Link to="/profile" className="back-link">
             <FiArrowLeft size={16} color="#e02041" />
-            Voltar para home
+            Go back
           </Link>
         </section>
         <form onSubmit={handleSubmit}>
           <input type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          placeholder="Título do caso" />
+          placeholder="Incident Title" />
           <textarea
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          placeholder="Descrição" />
+          placeholder="Description" />
           <input type="text"
           value={value}
           onChange={(e) => setValue(e.target.value)}
-          placeholder="Valor em reais" />
+          placeholder="Amount USD" />
 
           <button className="button" type="submit">
-            Cadastrar
+            Create new Incident
           </button>
         </form>
       </div>

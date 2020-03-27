@@ -28,7 +28,7 @@ export default function Register() {
 
     try {
       const response = await api.post('ongs', data);
-      alert(`Seu ID de acesso: ${response.data.id}`);
+      alert(`Your access ID: ${response.data.id}`);
       history.push('/');
     } catch (error) {
       console.error(error);
@@ -40,19 +40,18 @@ export default function Register() {
       <div className="content">
         <section>
           <img src={logoImg} alt="Be The Hero" />
-          <h1>Cadastro</h1>
+          <h1>Registration</h1>
           <p>
-            Faça seu cadastro, entre na plataforma e ajude pessoas a encontrarem
-            os casos da sua ONG.
+            Register your Organization, enter and help your incidents to find heroes.
           </p>
           <Link to="/" className="back-link">
             <FiArrowLeft size={16} color="#e02041" />
-            Voltar para o logon
+            Go Back
           </Link>
         </section>
         <form onSubmit={handleRegister}>
           <input
-            placeholder="Nome da ONG"
+            placeholder="Organization"
             value={name}
             onChange={e => setName(e.target.value)}
           />
@@ -72,13 +71,13 @@ export default function Register() {
           <div className="input-group">
             <input
               type="text"
-              placeholder="Cidade"
+              placeholder="City"
               value={city}
               onChange={e => setCity(e.target.value)}
             />
             <input
               type="text"
-              placeholder="UF"
+              placeholder="State"
               value={uf}
               onChange={e => setUf(e.target.value)}
               style={{ width: 80 }}
@@ -86,7 +85,7 @@ export default function Register() {
           </div>
 
           <button className="button" type="submit">
-            Cadastrar
+            Register
           </button>
         </form>
       </div>

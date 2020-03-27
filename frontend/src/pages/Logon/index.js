@@ -20,7 +20,7 @@ export default function Logon() {
       localStorage.setItem('ongName', response.data.name);
       history.push('/profile')
     } catch (error) {
-      alert('Falha no login');
+      alert('Login failed');
       console.error(error);
     }
   }
@@ -33,17 +33,17 @@ export default function Logon() {
           <h1>Faça seu logon</h1>
           <input
             type="text"
-            placeholder="Sua ID"
+            placeholder="Your ID"
             value={id}
             onChange={e => setId(e.target.value)}
           />
           <button className="button" type="submit">
-            Entrar
+            Submit
           </button>
 
           <Link className="back-link" to="/register">
             <FiLogIn size={16} color="#e02041"></FiLogIn>
-            Não tenho cadastro
+            I do not have an ID
           </Link>
         </form>
       </section>
