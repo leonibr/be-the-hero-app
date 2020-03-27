@@ -7,7 +7,7 @@
 
 ## Getting Started
 The project is separeted by folders:
-1. Back-End ([set up](/backend/README.MD))
+1. Back-End ([set up](/backend/))
     * SQLite
     * NodeJs, Express
     * Tests
