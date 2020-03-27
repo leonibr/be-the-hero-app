@@ -12,16 +12,16 @@ export default function Detail() {
     const route = useRoute();
     const incident = route.params.incident;
     const message = 
-`Olá ${incident.name},
-Estou entrando em contato pois gostaria de ajudar no caso "${incident.title}"
-com o valor de ${Intl.NumberFormat('pt-BR', {style: 'currency',currency: 'BRL'}).format(incident.value)}
+`Hello ${incident.name},
+I am getting in touch because I would like to help this incident: "${incident.title}"
+with the amount of ${Intl.NumberFormat('en-US', {style: 'currency',currency: 'USD'}).format(incident.value)}
  `
     function navigateBack() {
         navigation.goBack();
     }
     function sendMail() {
         MailComposer.composeAsync({
-            subject: `Herói do caso: ${incident.title}`,
+            subject: `Incident: ${incident.title}`,
             recipients: [`${incident.email}`],
             body: message
         })
@@ -41,22 +41,22 @@ com o valor de ${Intl.NumberFormat('pt-BR', {style: 'currency',currency: 'BRL'})
 
       <View style={styles.incident}>
         <Text style={[styles.incidentProperty, {marginTop: 0}]}>ONG: </Text>
-  <Text style={styles.incidentValue}>{incident.name} de {incident.city}-{incident.uf}</Text>
-        <Text style={styles.incidentProperty}>CASO: </Text>
+  <Text style={styles.incidentValue}>{incident.name} of {incident.city}-{incident.uf}</Text>
+        <Text style={styles.incidentProperty}>INCIDENT: </Text>
         <Text style={styles.incidentValue}>{incident.title}</Text>
-        <Text style={styles.incidentProperty}>VALOR: </Text>
+        <Text style={styles.incidentProperty}>AMOUNT: </Text>
         <Text style={styles.incidentValue}>
-              {Intl.NumberFormat('pt-BR', {
+              {Intl.NumberFormat('en-US', {
                 style: 'currency',
-                currency: 'BRL'
+                currency: 'USD'
               }).format(incident.value)}
             </Text>
       </View>
 
       <View style={styles.contactBox}>
-        <Text style={styles.heroTitle}>Salve o dia!</Text>
-        <Text style={styles.heroTitle}>Seja o herói desse caso.</Text>
-        <Text style={styles.heroDescription}>Entre em contato:</Text>
+        <Text style={styles.heroTitle}>Save the day!</Text>
+        <Text style={styles.heroTitle}>Be this incident hero.</Text>
+        <Text style={styles.heroDescription}>Be in touch:</Text>
         <View style={styles.actions}>
           <TouchableOpacity style={styles.action} onPress={sendWhatsapp}>
             <Text style={styles.actionText}>WhatsApp</Text>
