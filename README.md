@@ -19,4 +19,9 @@ The project is separeted by folders:
 3. Mobile ([set up](/mobile/))
     * ReactNative
 
-Each project 
+
+This is a project made for learning purpose:
+- Added JWT auth (very simple)
+
+Next:
+- Add notification to the Frontend
