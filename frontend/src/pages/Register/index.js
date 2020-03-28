@@ -10,6 +10,7 @@ import { FiArrowLeft } from 'react-icons/fi';
 export default function Register() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [whatsapp, setWhatsapp] = useState('');
   const [city, setCity] = useState('');
   const [uf, setUf] = useState('');
@@ -23,7 +24,8 @@ export default function Register() {
       email,
       whatsapp,
       city,
-      uf
+      uf,
+      password
     };
 
     try {
@@ -54,6 +56,12 @@ export default function Register() {
             placeholder="Organization"
             value={name}
             onChange={e => setName(e.target.value)}
+          />
+          <input
+            placeholder="Password"
+            type="password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
           />
           <input
             type="email"

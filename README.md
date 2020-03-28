@@ -13,10 +13,10 @@ The project is separeted by folders:
     * Tests
         - Integration
         - Unit
-2. Front-End
+2. Front-End ([set up](/fontend/))
     * ReactJS
 
-3. Mobile
+3. Mobile ([set up](/mobile/))
     * ReactNative
 
 Each project 

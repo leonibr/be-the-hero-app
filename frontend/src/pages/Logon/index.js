@@ -10,14 +10,18 @@ import logoImg from '../../assets/logo.svg';
 export default function Logon() {
   const history = useHistory();
   const [id, setId] = useState('');
+  const [password, setPassword] = useState('');
+
 
   async function handleLogin(e) {
     e.preventDefault();
     try {
-      const response = await api.post('sessions', { id });
+      const response = await api.post('sessions', { id, password });
 
       localStorage.setItem('ongId', id);
       localStorage.setItem('ongName', response.data.name);
+      localStorage.setItem('token', response.data.token);
+      
       history.push('/profile')
     } catch (error) {
       alert('Login failed');
@@ -30,12 +34,18 @@ export default function Logon() {
       <section className="form">
         <img src={logoImg} alt="Be The Hero" />
         <form onSubmit={handleLogin}>
-          <h1>Faça seu logon</h1>
+          <h1>Logon please</h1>
           <input
             type="text"
             placeholder="Your ID"
             value={id}
             onChange={e => setId(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
           />
           <button className="button" type="submit">
             Submit

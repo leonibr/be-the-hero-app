@@ -9,7 +9,7 @@ import { FiArrowLeft } from 'react-icons/fi';
 
 export default function NewIncident() {
   const history = useHistory();
-  const ongId = localStorage.getItem('ongId');
+  const token = localStorage.getItem('token');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [value, setValue] = useState('');
@@ -25,7 +25,7 @@ export default function NewIncident() {
     try {
       await api.post('incidents', data, {
         headers: {
-          Authorization: ongId
+          Authorization: `Bearer ${token}`
         }
       });
 
