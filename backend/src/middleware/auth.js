@@ -13,7 +13,7 @@ function authMiddleware(req, res, next){
     jwt.verify(token, process.env.SECRET, function(err, decoded) {
       if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' + err.message });
    
-      req.userId = decoded.id;
+      req.ongId = decoded.id;
       next();
     });
   }

@@ -24,7 +24,7 @@ module.exports = {
   },
   create: async (request, response) => {
     const { title, description, value } = request.body;
-    const ong_id = request.headers.authorization;
+    const ong_id = request.ongId;
 
     const [id] = await connection('incidents').insert({
       title,
@@ -36,12 +36,18 @@ module.exports = {
   },
   delete: async (request, response) => {
     const { id } = request.params;
-    const ong_id = request.headers.authorization;
+    const ong_id = request.ongId;
 
     const incident = await connection('incidents')
       .where('id', id)
       .select('ong_id')
       .first();
+
+    if(!incident) {
+      return response.status(404).json({
+        error: 'Ong not found'
+      })
+    }
     if (incident.ong_id !== ong_id) {
       return response.status(403).json({
         error: 'Operation not permitted.'

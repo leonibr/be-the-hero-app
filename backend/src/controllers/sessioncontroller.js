@@ -31,6 +31,8 @@ module.exports = {
       });
 
       return response.json({
+        id,
+        name: ong.name,
         token
       });
     } catch (e) {

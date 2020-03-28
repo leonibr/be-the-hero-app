@@ -4,6 +4,7 @@
 
 
 ### This is a sample app made during the 'Omnistack week' from Rockseat. It is a fictional startup to connect donnors (heros) to NOGs causes: Hurt animals, etc.
+![](frontendreact.gif)
 
 ## Getting Started
 The project is separeted by folders:
