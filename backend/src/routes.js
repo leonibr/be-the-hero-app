@@ -76,6 +76,7 @@ routes.delete(
       id: Joi.number().required()
     })
   }),
+  authMiddleware,
   IncidentsController.delete
 );
 
@@ -86,6 +87,7 @@ routes.get(
       authorization: Joi.string().required()
     }).unknown()
   }),
+  authMiddleware,
   ProfileController.index
 );
 

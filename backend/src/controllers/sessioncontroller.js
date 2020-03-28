@@ -3,18 +3,6 @@ const passwordValidator = require('../utils/passwordValidator');
 const jwt = require('jsonwebtoken');
 
 module.exports = {
-  //   create: async (request, response) => {
-  //     const { id } = request.body;
-  //     const ong = await connection('ongs')
-  //       .where('id', id)
-  //       .select('name')
-  //       .first();
-  //     if (!ong) {
-  //       return response.status(400).json({ error: 'No ONG found with this id' });
-  //     }
-
-  //     return response.json(ong);
-  //   },
   logon: async (request, response) => {
     const error = 'Organization Id or Password invalid';
     try {
@@ -39,7 +27,7 @@ module.exports = {
       }
 
       var token = jwt.sign({ id: ong.id, name: ong.name }, process.env.SECRET, {
-        expiresIn: 300 // expires in 5min
+        //expiresIn: 300 // 5min
       });
 
       return response.json({
