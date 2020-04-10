@@ -4,17 +4,19 @@ WORKDIR /workdir/backend
 
 COPY package.json .
 
-ENV PATH /workdir/backend/node_modules/.bin:$PATH
 ENV VIRTUAL_HOST https://heroappjs-back.marques.top
 ENV LETSENCRYPT_HOST https://heroappjs-back.marques.top
 
-RUN npm install
-
 COPY . .
+
+ENV PATH /workdir/backend/node_modules/.bin:$PATH
+
+RUN npm install --silent
+
 
 EXPOSE 3333
  
-CMD [ "npm", "run", "start" ]
+CMD [ "npm", "start" ]
 
 
 
