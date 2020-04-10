@@ -6,8 +6,6 @@ services:
       - "3000:80"
     depends_on:
       - backend
-    links:
-      - backend
   backend:
     restart: always
     build: backend
