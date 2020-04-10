@@ -4,9 +4,11 @@ WORKDIR /workdir/backend
 
 COPY package.json .
 
-RUN npm install
-
 ENV PATH /workdir/backend/node_modules/.bin:$PATH
+ENV VIRTUAL_HOST https://heroappjs-back.marques.top
+ENV LETSENCRYPT_HOST https://heroappjs-back.marques.top
+
+RUN npm install
 
 COPY . .
 
