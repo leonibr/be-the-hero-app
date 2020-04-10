@@ -35,6 +35,8 @@ export default function Logon() {
         <img src={logoImg} alt="Be The Hero" />
         <form onSubmit={handleLogin}>
           <h1>Logon please</h1>
+  <h1>{process.env.REACT_APP_BASE_APP_URL}</h1>
+
           <input
             type="text"
             placeholder="Your ID"
