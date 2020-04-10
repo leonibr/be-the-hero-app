@@ -1,12 +1,12 @@
-FROM node:12.7-alpine AS build
+FROM node:12.7-alpine
 
-WORKDIR /workdir/backend/
+WORKDIR /workdir/backend
 
 COPY package.json .
 
 RUN npm install
 
-ENV PATH /workdir/backend/node_modules/.bin/:$PATH
+ENV PATH /workdir/backend/node_modules/.bin:$PATH
 
 COPY . .
 
