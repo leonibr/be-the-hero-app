@@ -12,7 +12,7 @@ COPY . .
 
 EXPOSE 3333
  
-ENTRYPOINT [ "npm run start" ]
+CMD [ "npm", "run", "start" ]
 
 
 
