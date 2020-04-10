@@ -1,0 +1,13 @@
+version: '2.0'
+services:
+  frontend:
+    build: frontend
+    ports:
+    - "3000:80"
+    links:
+    - backend
+  backend:
+    build: backend
+    
+volumes:
+  logvolume01: {}
