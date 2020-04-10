@@ -4,8 +4,8 @@ WORKDIR /workdir/backend
 
 COPY package.json .
 
-ENV VIRTUAL_HOST https://heroappjs-back.marques.top
-ENV LETSENCRYPT_HOST https://heroappjs-back.marques.top
+ENV VIRTUAL_HOST heroappjs-back.marques.top
+ENV LETSENCRYPT_HOST heroappjs-back.marques.top
 
 COPY . .
 
