@@ -11,8 +11,8 @@ RUN npm run build
 FROM nginx:1.17.1-alpine
 COPY --from=build /usr/src/front/build /usr/share/nginx/html
 
-ENV VIRTUAL_HOST https://heroappjs.marques.top
-ENV LETSENCRYPT_HOST https://heroappjs.marques.top
+ENV VIRTUAL_HOST heroappjs.marques.top
+ENV LETSENCRYPT_HOST heroappjs.marques.top
 
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
