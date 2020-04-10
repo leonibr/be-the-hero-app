@@ -6,6 +6,9 @@ COPY package.json .
 
 RUN npm install
 
+COPY . .
+
+EXPOSE 3333
  
 ENTRYPOINT [ "npm run start" ]
 

@@ -1,13 +1,18 @@
 version: '2.0'
 services:
   frontend:
+    name: front-react
     build: frontend
     ports:
-    - "3000:80"
+      - "3000:80"
+    depends_on:
+      - backend
     links:
-    - backend
+      - backend
   backend:
+    restart: always
+    name: back-express
     build: backend
+    ports: 
+      - "127.0.0.1:3333:3333"
     
-volumes:
-  logvolume01: {}
