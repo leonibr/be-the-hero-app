@@ -1,6 +1,8 @@
 
 const express = require('express');
-require("dotenv-safe").config();
+require("dotenv-safe").config({
+    allowEmptyValues: true
+});
 const jwt = require('jsonwebtoken');
 const routes = require('./routes');
 const swaggerUi = require('swagger-ui-express');
