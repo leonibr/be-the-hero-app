@@ -19,7 +19,7 @@ WORKDIR /workdir/backend/src
 
 EXPOSE 3333
  
-CMD [ "pm2", "start", "server.js" ]
+CMD [ "pm2-runtime", "server.js" ]
 
 
 
