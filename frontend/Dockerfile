@@ -4,7 +4,7 @@ COPY package.json ./
 RUN npm install
 COPY . .
 
-ENV REACT_APP_BASE_APP_URL https://heroappjs.marques.top
+ENV REACT_APP_BASE_APP_URL https://heroappjs-back.marques.top
 
 RUN npm run build
 

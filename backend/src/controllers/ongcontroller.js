@@ -5,7 +5,16 @@ const connection = require('../database/connection');
 const crypto = require('crypto');
 module.exports = {
   index: async (_, response) => {
-    const ongs = await connection('ongs').select('*');
+    const ongs = await connection('ongs')
+    .orderBy('id', 'desc')
+    .limit(10).select([
+     // 'id',
+      'name',
+      'email',
+      'whatsapp',
+      'city',
+      'uf'
+    ]);
     return response.status(200).json(ongs);
   },
   create: async (request, response) => {

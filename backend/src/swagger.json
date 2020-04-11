@@ -1,0 +1,417 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "description": "this is the documentation for Be the hero sampleapp hosted  in docker on my box. ",
+      "version": "1.0.0",
+      "title": "Be The Hero API",
+      "contact": {
+        "email": "cyphernet.solutions@gmail.com"
+      },
+      "license": {
+        "name": "Apache 2.0",
+        "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+      }
+    },
+    "host": "heroappjs-back.marques.top",
+    "basePath": "/",
+    "tags": [
+      {
+        "name": "Ongs",
+        "description": "Non-governmental organization - NGOs (ONGs : pt-BR)",
+        "externalDocs": {
+          "description": "Find out more",
+          "url": "http://tiny.cc/34mtmz"
+        }
+      },
+      {
+        "name": "Incidents",
+        "description": "Incidents are here waiting for the heros"
+      },
+      {
+        "name": "Profile",
+        "description": "Operations about NGOs incidents",
+        "externalDocs": {
+          "description": "Find out more about",
+          "url": "https://github.com/leonibr/be-the-hero-app"
+        }
+      }
+    ],
+    "schemes": [
+      "https",
+      "http"
+    ],
+    "paths": {
+      "/ongs": {
+        "get": {
+          "tags": [
+            "Ongs"
+          ],
+          "summary": "Return latest 10 NGOs in database",
+          "operationId": "getOng",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "schema": {
+                "$ref": "#/definitions/OngListItem"
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "Ongs"
+          ],
+          "summary": "Add a new NGO/ONG to the App",
+          "description": "",
+          "operationId": "addOng",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "Initial data to be saved from NGO/ONG",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/Ong"
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "ONG/NGO created"
+            },
+            "400": {
+              "description": "Missing argument or bad data"
+            }
+          },
+          "security": [
+            {
+              "heroapp_auth": [
+                "write:ongs",
+                "read:ongs"
+              ]
+            }
+          ]
+        }
+      },
+      "/incidents": {
+        "get": {
+          "tags": [
+            "Incidents"
+          ],
+          "summary": "Return a paginated list of all incidents",
+          "operationId": "getIncidents",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "query",
+              "name": "page",
+              "description": "If not informed 1 is the default value",
+              "type": "integer",
+              "format": "int32"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/IncidentItemList"
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "heroapp_auth": [
+                "read:incidents"
+              ]
+            }
+          ]
+        },
+        "post": {
+          "tags": [
+            "Incidents"
+          ],
+          "summary": "Creates a new incident",
+          "operationId": "postIncidents",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "required": true,
+              "description": "If not informed 1 is the default value",
+              "schema": {
+                "$ref": "#/definitions/IncidentToCreate"
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "successful operation",
+              "schema": {
+                "$ref": "#/definitions/ReturnedId"
+              }
+            },
+            "400": {
+              "description": "Bad request"
+            }
+          },
+          "security": [
+            {
+              "heroapp_auth": [
+                "write:incidents"
+              ]
+            }
+          ]
+        }
+      },
+      "/incidents/{id}": {
+        "delete": {
+          "tags": [
+            "Incidents"
+          ],
+          "summary": "Deltes the incident by its id",
+          "operationId": "deleteIncidents",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "type": "integer",
+              "required": true,
+              "format": "int32",
+              "description": "The id of the incidente to be deleted"
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "successful operation",
+              "schema": {
+                "$ref": "#/definitions/ReturnedId"
+              }
+            },
+            "403": {
+              "description": "Not allowed to delete."
+            },
+            "404": {
+              "description": "Not found to be deleted. So it was not deleted"
+            }
+          }
+        }
+      },
+      "/profile": {
+        "get": {
+          "tags": [
+            "Profile"
+          ],
+          "summary": "Return all the incidents of the logged user",
+          "operationId": "getProfile",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/IncidentsOfProfile"
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "heroapp_auth": [
+                "read:profile"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "securityDefinitions": {
+      "heroapp_auth": {
+        "type": "oauth2",
+        "authorizationUrl": "https://heroappjs-back.marques.top",
+        "flow": "implicit",
+        "scopes": {
+          "write:ongs": "create new NGOs",
+          "read:ongs": "read the latest NGOs",
+          "read:incidents": "read the incidets",
+          "write:incidents": "writes incidents",
+          "read:profile": "read the incidets"
+        }
+      },
+      "api_key": {
+        "type": "apiKey",
+        "name": "api_key",
+        "in": "header"
+      }
+    },
+    "definitions": {
+      "Ong": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "whatsapp": {
+            "type": "string",
+            "format": "int64"
+          },
+          "city": {
+            "type": "string"
+          },
+          "uf": {
+            "type": "string",
+            "description": "State in two letters format"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "OngListItem": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "whatsapp": {
+            "type": "string",
+            "format": "int64"
+          },
+          "city": {
+            "type": "string"
+          },
+          "uf": {
+            "type": "string",
+            "description": "State in two letters format"
+          }
+        }
+      },
+      "IncidentItemList": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          },
+          "ong_id": {
+            "type": "string"
+          },
+          "ong.name": {
+            "type": "string"
+          },
+          "ong.email": {
+            "type": "string"
+          },
+          "ong.whatsapp": {
+            "type": "string",
+            "format": "int64"
+          },
+          "ong.city": {
+            "type": "string"
+          },
+          "ong.uf": {
+            "type": "string"
+          }
+        }
+      },
+      "IncidentToCreate": {
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        }
+      },
+      "ReturnedId": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "int64"
+          }
+        }
+      },
+      "IncidentsOfProfile": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          },
+          "ong_id": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "externalDocs": {
+      "description": "Find out more about Swagger",
+      "url": "http://swagger.io"
+    }
+  }
