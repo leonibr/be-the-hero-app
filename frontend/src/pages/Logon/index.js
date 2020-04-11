@@ -6,13 +6,17 @@ import api from '../../services/api';
 import './styles.css';
 import heroesImg from '../../assets/heroes.png';
 import logoImg from '../../assets/logo.svg';
+// npm install --save-dev @iconify/react @iconify/icons-logos
+import { Icon } from '@iconify/react';
+import swaggerIcon from '@iconify/icons-logos/swagger';
+
 
 export default function Logon() {
   const history = useHistory();
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
-
-
+  const linkSwagger = `${process.env.REACT_APP_BASE_APP_URL}/api-docs`;
+  const sizeSwagger = '1.2rem';
   async function handleLogin(e) {
     e.preventDefault();
     try {
@@ -35,8 +39,6 @@ export default function Logon() {
         <img src={logoImg} alt="Be The Hero" />
         <form onSubmit={handleLogin}>
           <h1>Logon please</h1>
-  <h1>{process.env.REACT_APP_BASE_APP_URL}</h1>
-
           <input
             type="text"
             placeholder="Your ID"
@@ -60,6 +62,14 @@ export default function Logon() {
         </form>
       </section>
       <img src={heroesImg} alt="Heroes" />
+      <footer>
+        <h3>Interactive API documentation</h3>
+        <div className="swagger-line">
+        <Icon icon={swaggerIcon} width={sizeSwagger} height={sizeSwagger} />
+        <a href={linkSwagger}>Swagger</a>
+        </div>
+        
+      </footer>
     </div>
   );
 }
