@@ -13,10 +13,13 @@ ENV PATH /workdir/backend/node_modules/.bin:$PATH
 
 RUN npm install --silent
 
+RUN npm install -g pm2
+
+WORKDIR /workdir/backend/src
 
 EXPOSE 3333
  
-CMD [ "npm", "start" ]
+CMD [ "pm2", "start", "server.js" ]
 
 
 
