@@ -18,7 +18,24 @@ const cors = require('cors');
 const app = express();
 const{ errors } = require('celebrate');
 
-app.use(cors());
+const whitelist = [
+'http://localhost:3333', 
+'http://[::1]:3333', 
+'[::1]:3333',
+`https://${process.env.VIRTUAL_HOST}`]
+const corsOptions = (req, callback)  =>{ 
+    const origin = req.header('Origin');
+    let options = {};
+    if (whitelist.indexOf(origin) !== -1) {
+        options = { origin: true }
+    } else {
+        options = { origin: false }
+    }
+    callback(null, options);  
+}
+
+
+app.use(cors(corsOptions));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(express.json());
 app.use(routes);

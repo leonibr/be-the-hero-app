@@ -66,7 +66,7 @@ export default function Logon() {
         <h3>Interactive API documentation</h3>
         <div className="swagger-line">
         <Icon icon={swaggerIcon} width={sizeSwagger} height={sizeSwagger} />
-        <a href={linkSwagger}>Swagger</a>
+        <a href={linkSwagger} target="_blank">Swagger</a>
         </div>
         
       </footer>
