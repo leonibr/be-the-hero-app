@@ -1,5 +1,9 @@
 
 const express = require('express');
+const fs = require('fs');
+ if (!fs.existsSync('.env.example')) {
+     fs.writeFileSync('.env.example','SECRET=dummy');
+ }
 require("dotenv-safe").config({
     allowEmptyValues: true
 });
