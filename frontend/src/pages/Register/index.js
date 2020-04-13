@@ -1,31 +1,145 @@
-import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import React, { useState, Component } from 'react';
+import { Link, withRouter } from 'react-router-dom';
 
 import api from '../../services/api';
-import './styles.css';
+import './styles.scss';
 
 import logoImg from '../../assets/logo.svg';
 import { FiArrowLeft } from 'react-icons/fi';
+import FormErrors from '../../components/FormErrors';
 
-export default function Register() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [whatsapp, setWhatsapp] = useState('');
-  const [city, setCity] = useState('');
-  const [uf, setUf] = useState('');
+export default class Register extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: '',
+      email: '',
+      password: '',
+      whatsapp: '',
+      city: '',
+      uf: '',
+      errors: {
+        name: '',
+        email: '',
+        password: '',
+        whatsapp: '',
+        city: '',
+        uf: '',
+      },
+      validForm: false,
+      validName: false,
+      validPassword: false,
+      validEmail: false,
+      validWhatsapp: false,
+      validCity: false,
+      validUf: false,
+    };
+  }
 
-  const history = useHistory();
+  handleUserInput(e) {
+    const name = e.target.name;
+    const value = e.target.value;
+    //console.log(`${name}: ${value}`);
+    this.setState({ [name]: value }, () => {
+      this.validateField(name, value);
+    });
+  }
 
-  async function handleRegister(e) {
+  validateField(fieldName, value) {
+    let fieldValidationErrors = this.state.errors;
+    let validName = this.state.validName;
+    let validPassword = this.state.validPassword;
+    let validEmail = this.state.validEmail;
+    let validWhatsapp = this.state.validWhatsapp;
+    let validCity = this.state.validCity;
+    let validUf = this.state.validUf;
+
+    switch (fieldName) {
+      case 'name':
+        validName = value !== null && value.length >= 4;
+        fieldValidationErrors.name = validName ? '' : ' is invalid';
+        break;
+      case 'email':
+        validEmail = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
+        fieldValidationErrors.email = validEmail ? '' : ' is invalid';
+        break;
+      case 'password':
+        validPassword = value.length >= 4;
+        fieldValidationErrors.password = validPassword ? '' : ' is too short';
+        break;
+      case 'whatsapp':
+        validWhatsapp = value.length === 10 && !isNaN(new Number(value));
+        fieldValidationErrors.whatsapp = validWhatsapp
+          ? ''
+          : ' needs exactly 10 numbers';
+      case 'city':
+        validCity = value !== null && value.length >= 3;
+        fieldValidationErrors.city = validCity ? '' : ' is required';
+      case 'uf':
+        validUf = false;
+        switch (true) {
+          case (value === null || value === undefined):
+            console.log('null || undefined');
+            fieldValidationErrors.uf = ' is required';
+            break;
+          case (value.length === 0):
+            console.log('value.length === 0');
+            fieldValidationErrors.uf = ' can not be empty.';
+            break;
+          case (value.length === 1):
+            console.log('value.length === 1');
+            fieldValidationErrors.uf = ' is missing one letter.';
+            break;
+          case (value.length > 2):
+            console.log('value.length > 2');
+            fieldValidationErrors.uf = ' needs to be informed with exactly 2 letters';
+            break;
+          default:
+            console.log('default');
+            validUf = true;
+            fieldValidationErrors.uf = '';
+            break;
+        }
+
+      default:
+        break;
+    }
+    this.setState(
+      {
+        errors: fieldValidationErrors,
+        validName,
+        validEmail,
+        validPassword,
+        validWhatsapp,
+        validCity,
+        validUf,
+      },
+      this.validateForm
+    );
+  }
+
+  validateForm() {
+    this.setState({
+      validForm:
+        this.state.validName &&
+        this.state.validPassword &&
+        this.state.validEmail &&
+        this.state.validWhatsapp &&
+        this.state.validCity &&
+        this.state.validUf,
+    });
+  }
+
+  async handleRegister(e) {
+    const { history } = this.props;
     e.preventDefault();
     const data = {
-      name,
-      email,
-      whatsapp,
-      city,
-      uf,
-      password
+      name: this.state.name,
+      email: this.state.email,
+      whatsapp: this.state.whatsapp,
+      city: this.state.city,
+      uf: this.state.uf,
+      password: this.state.password,
     };
 
     try {
@@ -36,67 +150,81 @@ export default function Register() {
       console.error(error);
     }
   }
-
-  return (
-    <div className="register-container">
-      <div className="content">
-        <section>
-          <img src={logoImg} alt="Be The Hero" />
-          <h1>Registration</h1>
-          <p>
-            Register your Organization, enter and help your incidents to find heroes.
-          </p>
-          <Link to="/" className="back-link">
-            <FiArrowLeft size={16} color="#e02041" />
-            Go Back
-          </Link>
-        </section>
-        <form onSubmit={handleRegister}>
-          <input
-            placeholder="Organization"
-            value={name}
-            onChange={e => setName(e.target.value)}
-          />
-          <input
-            placeholder="Password"
-            type="password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-          />
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="WhatsApp"
-            value={whatsapp}
-            onChange={e => setWhatsapp(e.target.value)}
-          />
-
-          <div className="input-group">
+  render() {
+    return (
+      <div className="register-container">
+        <div className="content">
+          <section>
+            <img src={logoImg} alt="Be The Hero" />
+            <h1>Registration</h1>
+            <p>
+              Register your Organization, enter and help your incidents to find
+              heroes.
+            </p>
+            <Link to="/" className="back-link">
+              <FiArrowLeft size={16} color="#e02041" />
+              Go Back
+            </Link>
+          </section>
+          <form onSubmit={this.handleRegister}>
+            <FormErrors errors={this.state.errors} />
             <input
-              type="text"
-              placeholder="City"
-              value={city}
-              onChange={e => setCity(e.target.value)}
+              placeholder="Organization"
+              value={this.state.name}
+              name="name"
+              className="form-control"
+              onChange={(e) => this.handleUserInput(e)}
+            />
+            <input
+              placeholder="Password"
+              name="password"
+              type="password"
+              className="form-control"
+              value={this.state.password}
+              onChange={(e) => this.handleUserInput(e)}
+            />
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              className="form-control"
+              value={this.state.email}
+              onChange={(e) => this.handleUserInput(e)}
             />
             <input
               type="text"
-              placeholder="State"
-              value={uf}
-              onChange={e => setUf(e.target.value)}
-              style={{ width: 80 }}
+              placeholder="WhatsApp"
+              className="form-control"
+              value={this.state.whatsapp}
+              name="whatsapp"
+              onChange={(e) => this.handleUserInput(e)}
             />
-          </div>
 
-          <button className="button" type="submit">
-            Register
-          </button>
-        </form>
+            <div className="d-flex">
+              <input
+                type="text"
+                placeholder="City"
+                className="form-control"
+                name="city"
+                value={this.state.city}
+                onChange={(e) => this.handleUserInput(e)}
+              />
+              <input
+                type="text"
+                placeholder="State"
+                value={this.state.uf}
+                name="uf"
+                className="form-control format-state ml-2"
+                onChange={(e) => this.handleUserInput(e)}
+              />
+            </div>
+
+            <button className="btn hero-button" type="submit">
+              Register
+            </button>
+          </form>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
