@@ -19,6 +19,8 @@ const app = express();
 const{ errors } = require('celebrate');
 
 const whitelist = [
+'http://localhost:3000',
+'http://[::1]:3000',
 'http://localhost:3333', 
 'http://[::1]:3333', 
 '[::1]:3333',

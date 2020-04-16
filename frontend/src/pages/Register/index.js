@@ -1,6 +1,6 @@
-import React, { useState, Component } from 'react';
+import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-
+import ModalDialog from '../../components/ModalDialog';
 import api from '../../services/api';
 import './styles.scss';
 
@@ -12,6 +12,10 @@ export default class Register extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      modalShow: false,
+      modalTitle: '',
+      modalSubTitle: '',
+      modalDescriptions: [],
       name: '',
       email: '',
       password: '',
@@ -44,7 +48,11 @@ export default class Register extends Component {
       this.validateField(name, value);
     });
   }
-
+  setModalShow = (newValue) => {
+    this.setState({
+      modalShow: newValue,
+    });
+  };
   validateField(fieldName, value) {
     let fieldValidationErrors = this.state.errors;
     let validName = this.state.validName;
@@ -79,23 +87,18 @@ export default class Register extends Component {
         validUf = false;
         switch (true) {
           case (value === null || value === undefined):
-            console.log('null || undefined');
             fieldValidationErrors.uf = ' is required';
             break;
           case (value.length === 0):
-            console.log('value.length === 0');
             fieldValidationErrors.uf = ' can not be empty.';
             break;
           case (value.length === 1):
-            console.log('value.length === 1');
             fieldValidationErrors.uf = ' is missing one letter.';
             break;
           case (value.length > 2):
-            console.log('value.length > 2');
             fieldValidationErrors.uf = ' needs to be informed with exactly 2 letters';
             break;
           default:
-            console.log('default');
             validUf = true;
             fieldValidationErrors.uf = '';
             break;
@@ -130,7 +133,7 @@ export default class Register extends Component {
     });
   }
 
-  async handleRegister(e) {
+  handleRegister= async(e) => {
     const { history } = this.props;
     e.preventDefault();
     const data = {
@@ -144,12 +147,37 @@ export default class Register extends Component {
 
     try {
       const response = await api.post('ongs', data);
+      this.setModalText({
+        modalTitle: 'Register',
+        modalSubTitle: 'Information stored.',
+        modalDescriptions: [
+          'Your data has ben recorded',
+          'You will be placed at your profile page.',
+          'Here you \'Cretate new Incidents\'',
+        ],
+      });
       alert(`Your access ID: ${response.data.id}`);
       history.push('/');
     } catch (error) {
-      console.error(error);
+      this.setModalText({
+        modalTitle: 'Register Error',
+        modalSubTitle: 'Please check your info.',
+        modalDescriptions: [
+          'Verify your data before submit again.',          
+        ],
+      });
+      console.error('ERROR> ', error);
+    } finally {
+      this.setModalShow(true);
     }
   }
+
+  setModalText = ({ modalTitle, modalSubTitle, modalDescriptions }) => {
+    this.setState({
+      modalTitle, modalSubTitle, modalDescriptions });
+  };
+
+  
   render() {
     return (
       <div className="register-container">
@@ -224,6 +252,13 @@ export default class Register extends Component {
             </button>
           </form>
         </div>
+        <ModalDialog
+          show={this.state.modalShow}
+          maintitle={this.state.modalTitle}
+          subtitle={this.state.modalSubTitle}
+          descriptions={this.state.modalDescriptions}
+          onHide={() => this.setModalShow(false)}
+        />
       </div>
     );
   }

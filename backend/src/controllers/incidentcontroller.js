@@ -16,7 +16,7 @@ module.exports = {
         'ongs.email',
         'ongs.whatsapp',
         'ongs.city',
-        'ongs.uf'
+        'ongs.uf',
       ]);
 
     const total = response.header('X-Total-Count', count['count(*)']);
@@ -25,14 +25,23 @@ module.exports = {
   create: async (request, response) => {
     const { title, description, value } = request.body;
     const ong_id = request.ongId;
+    try {
+      const id = await connection('incidents')
+      .returning('id')
+      .insert({
+        title,
+        description,
+        value,
+        ong_id,
+      });
+      console.log('id', id);
+      return response.status(201).json({ id });
+    } catch (error) {
+      console.log(error);
+      return response.status(500).json(error);
+    }
 
-    const [id] = await connection('incidents').insert({
-      title,
-      description,
-      value,
-      ong_id
-    });
-    return response.status(201).json({ id });
+    
   },
   delete: async (request, response) => {
     const { id } = request.params;
@@ -43,21 +52,19 @@ module.exports = {
       .select('ong_id')
       .first();
 
-    if(!incident) {
+    if (!incident) {
       return response.status(404).json({
-        error: 'Ong not found'
-      })
+        error: 'Ong not found',
+      });
     }
     if (incident.ong_id !== ong_id) {
       return response.status(403).json({
-        error: 'Operation not permitted.'
+        error: 'Operation not permitted.',
       });
     }
 
-    await connection('incidents')
-      .where('id', id)
-      .delete();
+    await connection('incidents').where('id', id).delete();
 
     return response.status(204).send();
-  }
+  },
 };

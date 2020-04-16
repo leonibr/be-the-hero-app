@@ -3,15 +3,34 @@
 module.exports = {
 
   development: {
-    client: 'sqlite3',
+    client: 'pg',
     connection: {
-      filename: './src/database/db.sqlite'
+      user: process.env.DBUSER,
+      host:process.env.DBHOST,
+      database:process.env.DBDATABASE,
+      password:process.env.DBPASS,
+      port:process.env.DBPORT,
+    },
+    pool: {
+      min: 2,
+      max: 10
     },
     migrations: {
-      directory: './src/database/migrations'
-    },
-    useNullAsDefault: true
+      directory: './src/database/migrations',
+      tableName: 'knex_migrations'
+    }
   },
+
+  // development: {
+  //   client: 'sqlite3',
+  //   connection: {
+  //     filename: './src/database/db.sqlite'
+  //   },
+  //   migrations: {
+  //     directory: './src/database/migrations'
+  //   },
+  //   useNullAsDefault: true
+  // },
 
   test: {
     client: 'sqlite3',
@@ -41,17 +60,20 @@ module.exports = {
   },
 
   production: {
-    client: 'postgresql',
+    client: 'pg',
     connection: {
-      database: 'my_db',
-      user:     'username',
-      password: 'password'
+      user: process.env.DBUSER,
+      host:process.env.DBHOST,
+      database:process.env.DBDATABASE,
+      password:process.env.DBPASS,
+      port:process.env.DBPORT,
     },
     pool: {
       min: 2,
       max: 10
     },
     migrations: {
+      directory: './src/database/migrations',
       tableName: 'knex_migrations'
     }
   }
