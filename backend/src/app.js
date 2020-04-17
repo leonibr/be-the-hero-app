@@ -17,7 +17,7 @@ const swaggerDocument = require('./swagger.json');
 const cors = require('cors');
 const app = express();
 const{ errors } = require('celebrate');
-const localhost = [];
+let localhost = [];
 if (process.env.NODE_ENV === 'production') {
     localhost = []
 } else {
