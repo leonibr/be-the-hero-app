@@ -1,4 +1,5 @@
 # The Hero App  - Javascript
+## Live demo: [https://heroappjs.marques.top](https://heroappjs.marques.top)
 
 ![](/frontend/src/assets/heroes.png)
 
@@ -31,7 +32,7 @@ This is a project made for learning purpose:
 ![New dialog](frontend/dialog.png)
 - PostgreSQL instead of SQLite
 - Docker
-- Deploy `https://heroappjs.marques.top`
+- Deploy `https://heroappjs.marques.top` SSL
 
 Next:
 - Add notification to the Frontend
