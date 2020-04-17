@@ -28,5 +28,7 @@ services:
       - POSTGRES_DB=hero_db
       - POSTGRES_USER=herouser
       - POSTGRES_PASSWORD=heropass
+    ports:
+      - "2255:5432"
       
     

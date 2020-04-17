@@ -17,7 +17,7 @@ export default class Logon extends Component {
   // const [id, setId] = useState('');
   ///let [password, setPassword] = useState('');
 
-  linkSwagger = `${process.env.REACT_APP_BASE_APP_URL}/api-docs`;
+  linkSwagger =process.env.REACT_APP_BASE_APP_URL ? `${process.env.REACT_APP_BASE_APP_URL}/api-docs`: `http://localhost:3333/api-docs`;
   sizeSwagger = 24;
   constructor(props) {
     super(props);
