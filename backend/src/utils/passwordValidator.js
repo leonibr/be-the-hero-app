@@ -1,6 +1,6 @@
 
 
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 module.exports =  {
     hash: async (passwordToHash) => {
