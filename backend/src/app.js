@@ -17,14 +17,23 @@ const swaggerDocument = require('./swagger.json');
 const cors = require('cors');
 const app = express();
 const{ errors } = require('celebrate');
+const localhost = [];
+if (process.env.NODE_ENV === 'production') {
+    localhost = []
+} else {
+
+    localhost = [
+        'http://localhost:3000',
+        'http://[::1]:3000',
+        'http://localhost:3333', 
+        'http://[::1]:3333', 
+        '[::1]:3333',
+    ]
+}
 
 const whitelist = [
-'http://localhost:3000',
-'http://[::1]:3000',
-'http://localhost:3333', 
-'http://[::1]:3333', 
-'[::1]:3333',
-`https://${process.env.VIRTUAL_HOST}`]
+    ...localhost,
+    `https://${process.env.VIRTUAL_HOST}`]
 const corsOptions = (req, callback)  =>{ 
     const origin = req.header('Origin');
     let options = {};

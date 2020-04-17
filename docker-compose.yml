@@ -1,7 +1,10 @@
 version: '2.0'
 services:
   frontend:
-    build: frontend
+    build:
+      context: backend
+      environment:
+        - REACT_APP_BASE_APP_URL=http://localhost:3333
     ports:
       - "3000:80"
   backend:

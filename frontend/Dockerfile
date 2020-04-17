@@ -5,7 +5,7 @@ COPY package-lock.json ./
 RUN npm install --silent
 COPY . .
 
-ENV REACT_APP_BASE_APP_URL http://localhost:3333
+# ENV REACT_APP_BASE_APP_URL http://localhost:3333
 # https://heroappjs-back.marques.top
 
 
