@@ -1,13 +1,15 @@
 FROM node:12.7-alpine AS build
 WORKDIR /usr/src/front
 COPY package.json ./
-RUN npm install
+COPY package-lock.json ./
+RUN npm install --silent
 COPY . .
-
-RUN npm run build
 
 ENV REACT_APP_BASE_APP_URL http://localhost:3333
 # https://heroappjs-back.marques.top
+
+
+RUN npm run build
 
 FROM nginx:1.17.1-alpine
 COPY --from=build /usr/src/front/build /usr/share/nginx/html
