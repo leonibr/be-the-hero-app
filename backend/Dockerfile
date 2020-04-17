@@ -19,8 +19,6 @@ EXPOSE 3333
 
 ENV VIRTUAL_HOST=heroappjs-back.marques.top
 
-HEALTHCHECK --interval=1m --timeout=5s \
-  CMD curl -f http://127.0.0.1:3333/ongs || exit 1
 
 ENTRYPOINT [ "pm2-runtime", "server.js" ]
 
