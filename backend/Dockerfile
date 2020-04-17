@@ -17,7 +17,9 @@ WORKDIR /workdir/backend/src
 
 EXPOSE 3333
 
- 
+HEALTHCHECK --interval=1m --timeout=5s \
+  CMD curl -f http://localhost:3333/ongs || exit 1
+
 ENTRYPOINT [ "pm2-runtime", "server.js" ]
 
 
