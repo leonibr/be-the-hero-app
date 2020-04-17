@@ -9,8 +9,8 @@
 ## Getting Started
 The project is separeted by folders:
 1. Back-End ([set up](/backend/))
-    * SQLite
-    * NodeJs, Express
+    * ~~SQLite~~ Updated to Postgres 12.2
+    * NodeJs, Express, knex
     * Tests
         - Integration
         - Unit
