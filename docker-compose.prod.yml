@@ -1,0 +1,36 @@
+version: '2.0'
+services:
+  frontend:
+    build: frontend
+    environment:
+      - REACT_APP_BASE_APP_URL=heroappjs-back.marques.top
+      - LETSENCRYPT_HOST=heroappjs.marques.top
+      - VIRTUAL_HOST=heroappjs.marques.top
+    ports:
+      - "3000:80"
+  backend:
+    restart: always
+    build: backend
+    ports: 
+      - "127.0.0.1:3333:3333"
+    environment:
+      - POSTGRES_DB=hero_db
+      - POSTGRES_USER=herouser
+      - POSTGRES_PASSWORD=heropass
+      - DBHOST=dbserver
+      - DBPORT=5432
+      - LETSENCRYPT_HOST=heroappjs-back.marques.top
+      - VIRTUAL_HOST=heroappjs-back.marques.top
+    depends_on:
+      - db
+    links: 
+      - "db:dbserver"
+  db:
+    restart: always
+    build: ./backend/src/database
+    environment:
+      - POSTGRES_DB=hero_db
+      - POSTGRES_USER=herouser
+      - POSTGRES_PASSWORD=heropass
+      
+    

@@ -4,8 +4,6 @@ services:
     build: frontend
     environment:
       - REACT_APP_BASE_APP_URL=http://localhost:3333
-      - LETSENCRYPT_HOST=heroappjs.marques.top
-      - VIRTUAL_HOST=heroappjs.marques.top
     ports:
       - "3000:80"
   backend:
@@ -18,9 +16,7 @@ services:
       - POSTGRES_USER=herouser
       - POSTGRES_PASSWORD=heropass
       - DBHOST=dbserver
-      - DBPORT=5432
-      - LETSENCRYPT_HOST=heroappjs-back.marques.top
-      - VIRTUAL_HOST=heroappjs-back.marques.top
+      - DBPORT=5432      
     depends_on:
       - db
     links: 
