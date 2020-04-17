@@ -21,12 +21,10 @@ services:
       - "db:dbserver"
   db:
     restart: always
-    image: postgres:12.2
+    build: ./backend/src/database
     environment:
       - POSTGRES_DB=hero_bd
       - POSTGRES_USER=herouser
       - POSTGRES_PASSWORD=heropass
-    volumes:
-      - ./backend/src/database/init.sql:/docker-entrypoint-initdb.d/init.sql
       
     
