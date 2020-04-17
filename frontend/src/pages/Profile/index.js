@@ -8,32 +8,7 @@ import api from '../../services/api';
 
 export default function Profile() {
   const history = useHistory();
-  const [incidents, setIncidents] = useState([
-  //   {
-  //   id: 1,
-  //   title: 'título 01',
-  //   description: 'Deads fa;lsd fl;asdfl;asdl;fjlajsd fl; as;dlfa;lsd fjla',
-  //   value: '120'
-  // },
-  // {
-  //   id: 2,
-  //   title: 'título 02',
-  //   description: 'Deads fa;lsd fl;asdfl;asdl;fjlajsd fl; as;dlfa;lsd fjla',
-  //   value: '120'
-  // },
-  // {
-  //   id: 3,
-  //   title: 'título 03',
-  //   description: 'Deads fa;lsd fl;asdfl;asdl;fjlajsd fl; as;dlfa;lsd fjla',
-  //   value: '120'
-  // },
-  // {
-  //   id: 4,
-  //   title: 'título 04',
-  //   description: 'Deads fa;lsd fl;asdfl;asdl;fjlajsd fl; as;dlfa;lsd fjla',
-  //   value: '120'
-  // }
-]);
+  const [incidents, setIncidents] = useState([]);
   const ongName = localStorage.getItem('ongName');
   const token = localStorage.getItem('token');
 

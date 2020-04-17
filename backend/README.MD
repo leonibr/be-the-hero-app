@@ -38,6 +38,14 @@ DBPORT=<5432 is the default, but it needs to be informed>
 #### Important:
 > The database, user, password and host they all need to exist!
 
+Optional step: Import sample data
+
+```shell
+# Located at:
+backend/src/database/init.sql
+``` 
+Finally:
+
 ```shell
 > npm start 
 ```
@@ -60,9 +68,3 @@ These are some of customizations made in the original project.
 1. Postgres instead Sqlite
 1. Docker
 1. Deploy
-
-
-
-
-
-
