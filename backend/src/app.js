@@ -33,7 +33,7 @@ if (process.env.NODE_ENV === 'production') {
 
 const whitelist = [
     ...localhost,
-    `https://${process.env.VIRTUAL_HOST}`]
+    `https://heroappjs.marques.top`]
 const corsOptions = (req, callback)  =>{ 
     const origin = req.header('Origin');
     let options = {};
