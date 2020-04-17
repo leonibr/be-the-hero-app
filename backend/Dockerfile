@@ -11,15 +11,18 @@ COPY . .
 
 ENV PATH /workdir/backend/node_modules/.bin:$PATH
 
-RUN npm install --silent
-
 RUN npm install -g pm2
+
+RUN npm install --silent
 
 WORKDIR /workdir/backend/src
 
+
 EXPOSE 3333
+
+
  
-CMD [ "pm2-runtime", "server.js" ]
+ENTRYPOINT [ "pm2-runtime", "server.js" ]
 
 
 

@@ -5,10 +5,10 @@ module.exports = {
   development: {
     client: 'pg',
     connection: {
-      user: process.env.DBUSER,
+      user: process.env.POSTGRES_USER,
       host:process.env.DBHOST,
-      database:process.env.DBDATABASE,
-      password:process.env.DBPASS,
+      database:process.env.POSTGRES_DB,
+      password:process.env.POSTGRES_PASSWORD,
       port:process.env.DBPORT,
     },
     pool: {
@@ -62,10 +62,10 @@ module.exports = {
   production: {
     client: 'pg',
     connection: {
-      user: process.env.DBUSER,
+      user: process.env.POSTGRES_USER,
       host:process.env.DBHOST,
-      database:process.env.DBDATABASE,
-      password:process.env.DBPASS,
+      database:process.env.POSTGRES_DB,
+      password:process.env.POSTGRES_PASSWORD,
       port:process.env.DBPORT,
     },
     pool: {

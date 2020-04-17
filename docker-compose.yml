@@ -4,11 +4,29 @@ services:
     build: frontend
     ports:
       - "3000:80"
-    depends_on:
-      - backend
   backend:
     restart: always
     build: backend
     ports: 
       - "127.0.0.1:3333:3333"
+    environment:
+      - POSTGRES_DB=hero_bd
+      - POSTGRES_USER=herouser
+      - POSTGRES_PASSWORD=heropass
+      - DBHOST=dbserver
+      - DBPORT=5432
+    depends_on:
+      - db
+    links: 
+      - "db:dbserver"
+  db:
+    restart: always
+    image: postgres:12.2
+    environment:
+      - POSTGRES_DB=hero_bd
+      - POSTGRES_USER=herouser
+      - POSTGRES_PASSWORD=heropass
+    volumes:
+      - ./backend/src/database/init.sql:/docker-entrypoint-initdb.d/init.sql
+      
     

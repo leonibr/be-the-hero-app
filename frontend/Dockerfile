@@ -4,9 +4,10 @@ COPY package.json ./
 RUN npm install
 COPY . .
 
-ENV REACT_APP_BASE_APP_URL https://heroappjs-back.marques.top
-
 RUN npm run build
+
+ENV REACT_APP_BASE_APP_URL http://localhost:3333
+# https://heroappjs-back.marques.top
 
 FROM nginx:1.17.1-alpine
 COPY --from=build /usr/src/front/build /usr/share/nginx/html
