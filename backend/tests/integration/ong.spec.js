@@ -20,7 +20,8 @@ describe('ONG', () => {
         email: 'ong@onc.com',
         whatsapp: '4700000000',
         city: 'nome city',
-        uf: 'SS'
+        uf: 'SS',
+        password: '123456'
       });
 
     expect(response.body).toHaveProperty('id');
