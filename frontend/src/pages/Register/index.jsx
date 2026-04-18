@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ModalDialog from '../../components/ModalDialog';
 import api from '../../services/api';
 import './styles.scss';
@@ -134,7 +134,7 @@ export default class Register extends Component {
   }
 
   handleRegister= async(e) => {
-    const { history } = this.props;
+    const { navigate } = this.props;
     e.preventDefault();
     const data = {
       name: this.state.name,
@@ -157,7 +157,7 @@ export default class Register extends Component {
         ],
       });
       alert(`Your access ID: ${response.data.id}`);
-      history.push('/');
+      navigate('/');
     } catch (error) {
       this.setModalText({
         modalTitle: 'Register Error',
