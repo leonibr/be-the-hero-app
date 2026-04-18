@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import './styles.scss';
 
@@ -8,7 +8,7 @@ import logoImg from '../../assets/logo.svg';
 import { FiArrowLeft } from 'react-icons/fi';
 
 export default function NewIncident() {
-  const history = useHistory();
+  const navigate = useNavigate();
   const token = localStorage.getItem('token');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -29,7 +29,7 @@ export default function NewIncident() {
         }
       });
 
-      history.push('/profile')
+      navigate('/profile')
     } catch (error) {
       alert('There was an error creating a new incident');
     }

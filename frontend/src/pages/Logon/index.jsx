@@ -1,27 +1,29 @@
-import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
-import { FiLogIn } from 'react-icons/fi';
-import api from '../../services/api';
-import './styles.scss';
-import heroesImg from '../../assets/heroes.png';
-import logoImg from '../../assets/logo.svg';
-import spinnerImg from '../../assets/circle.svg';
+import React, { Component } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { FiLogIn } from 'react-icons/fi'
+import api from '../../services/api'
+import './styles.scss'
+import heroesImg from '../../assets/heroes.png'
+import logoImg from '../../assets/logo.svg'
+import spinnerImg from '../../assets/circle.svg'
+import { Icon } from '@iconify/react'
+import swaggerIcon from '@iconify/icons-logos/swagger'
+import FormErrors from '../../components/FormErrors'
+import ModalDialog from '../../components/ModalDialog'
 
-// npm install --save-dev @iconify/react @iconify/icons-logos
-import { Icon } from '@iconify/react';
-import swaggerIcon from '@iconify/icons-logos/swagger';
-import FormErrors from '../../components/FormErrors';
-import ModalDialog from '../../components/ModalDialog';
+function LogonWrapper(props) {
+  const navigate = useNavigate()
+  return <Logon {...props} navigate={navigate} />
+}
+
 export default class Logon extends Component {
-  // const history = useHistory();
-  // const [id, setId] = useState('');
-  ///let [password, setPassword] = useState('');
+  linkSwagger = import.meta.env.VITE_BASE_APP_URL
+    ? `${import.meta.env.VITE_BASE_APP_URL}/api-docs`
+    : `http://localhost:3333/api-docs`
+  sizeSwagger = '1.2rem'
 
-  linkSwagger =process.env.REACT_APP_BASE_APP_URL ? `${process.env.REACT_APP_BASE_APP_URL}/api-docs`: `http://localhost:3333/api-docs`;
-  sizeSwagger = 24;
   constructor(props) {
-    super(props);
-    this.sizeSwagger = '1.2rem';
+    super(props)
     this.state = {
       isLoading: false,
       modalShow: false,
@@ -37,37 +39,37 @@ export default class Logon extends Component {
       validForm: false,
       validId: false,
       validPassword: false,
-    };
+    }
   }
 
   setIsLoading = (newLodingStatus) => {
-    this.setState({ isLoading: newLodingStatus });
-  };
+    this.setState({ isLoading: newLodingStatus })
+  }
 
   handleUserInput = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
+    const name = e.target.name
+    const value = e.target.value
     this.setState({ [name]: value }, () => {
-      this.validateField(name, value);
-    });
-  };
+      this.validateField(name, value)
+    })
+  }
 
   validateField(fieldName, value) {
-    let fieldValidationErrors = this.state.errors;
-    let validId = this.state.validId;
-    let validPassword = this.state.validPassword;
+    let fieldValidationErrors = this.state.errors
+    let validId = this.state.validId
+    let validPassword = this.state.validPassword
 
     switch (fieldName) {
       case 'id':
-        validId = value !== null && value.length >= 4;
-        fieldValidationErrors.id = validId ? '' : ' is invalid';
-        break;
+        validId = value !== null && value.length >= 4
+        fieldValidationErrors.id = validId ? '' : ' is invalid'
+        break
       case 'password':
-        validPassword = value.length >= 4;
-        fieldValidationErrors.password = validPassword ? '' : ' is too short';
-        break;
+        validPassword = value.length >= 4
+        fieldValidationErrors.password = validPassword ? '' : ' is too short'
+        break
       default:
-        break;
+        break
     }
     this.setState(
       {
@@ -76,42 +78,42 @@ export default class Logon extends Component {
         validPassword: validPassword,
       },
       this.validateForm
-    );
+    )
   }
 
   validateForm() {
     this.setState({
       validForm: this.state.validId && this.state.validPassword,
-    });
+    })
   }
 
   setModalShow = (newValue) => {
     this.setState({
       modalShow: newValue,
-    });
-  };
+    })
+  }
   setModalText = ({ modalTitle, modalSubTitle, modalDescriptions }) => {
     this.setState({
-      modalTitle, modalSubTitle, modalDescriptions });
-  };
+      modalTitle, modalSubTitle, modalDescriptions
+    })
+  }
 
   handleLogin = async (e) => {
-    const { history } = this.props;
-    e.preventDefault();
+    const { navigate } = this.props
+    e.preventDefault()
     try {
-      this.setIsLoading(true);
+      this.setIsLoading(true)
       const response = await api.post('sessions', {
         id: this.state.id,
         password: this.state.password,
-      });
+      })
 
-      localStorage.setItem('ongId', this.state.id);
-      localStorage.setItem('ongName', response.data.name);
-      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('ongId', this.state.id)
+      localStorage.setItem('ongName', response.data.name)
+      localStorage.setItem('token', response.data.token)
 
-      history.push('/profile');
+      navigate('/profile')
     } catch (error) {
-      // alert('Login failed');
       this.setModalText({
         modalTitle: 'Logon error',
         modalSubTitle: 'User Id and/or password are incorrect.',
@@ -120,13 +122,13 @@ export default class Logon extends Component {
           'Maybe you mistyped the password. Try again!',
           'If you can not succed after several tries, send us an email.',
         ],
-      });
-      this.setModalShow(true);
-      console.error(error);
+      })
+      this.setModalShow(true)
+      console.error(error)
     } finally {
-      this.setIsLoading(false);
+      this.setIsLoading(false)
     }
-  };
+  }
 
   render() {
     return (
@@ -203,7 +205,7 @@ export default class Logon extends Component {
               target="_blank"
             >
               <Icon
-                icon={this.swaggerIcon}
+                icon={swaggerIcon}
                 width={this.sizeSwagger}
                 height={this.sizeSwagger}
               />
@@ -219,6 +221,6 @@ export default class Logon extends Component {
           onHide={() => this.setModalShow(false)}
         />
       </div>
-    );
+    )
   }
 }

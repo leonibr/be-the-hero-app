@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 
 import './style.scss';
 import logoImg from '../../assets/logo.svg';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FiPower, FiTrash2 } from 'react-icons/fi';
 import api from '../../services/api';
 
 export default function Profile() {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [incidents, setIncidents] = useState([]);
   const ongName = localStorage.getItem('ongName');
   const token = localStorage.getItem('token');
@@ -41,7 +41,7 @@ export default function Profile() {
   function handleLogout() {
     localStorage.clear();
 
-    history.push('/');
+    navigate('/');
   }
   
   return (
